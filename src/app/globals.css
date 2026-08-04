@@ -1,0 +1,369 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* -------------------------------------------------------------------------- */
+/* Design tokens                                                              */
+/* -------------------------------------------------------------------------- */
+:root {
+  /* Brand palette */
+  --brand: #a6ce39; /* accent lime */
+  --brand-strong: #93b82f;
+  --brand-foreground: #14210a; /* text on brand */
+
+  /* Primary action blue (Figma: button #3277b4, border #5b9dd5) */
+  --blue: #3277b4;
+  --blue-strong: #2a6094;
+  --blue-foreground: #fbfbf8;
+
+  /* Navy background system */
+  --navy-deep: #0f1a28; /* page base / hero (Figma Desktop-7 fill) */
+  --navy: #132741; /* navy sections (services, path, footer) */
+  --navy-raised: #17304f; /* cards on navy */
+  --charcoal: #191919; /* charcoal sections (investing, testimonials, faq) */
+
+  --ink: #1b1b1b;
+  --surface: #0e1c30; /* page background */
+  --surface-raised: #1a2942; /* default card surface */
+  --surface-overlay: #21334f;
+  --body-gray: #9aa6b6;
+  --muted-gray: #6b7787;
+
+  --radius: 0.75rem;
+
+  /* shadcn semantic tokens (dark, single theme) */
+  --background: #0e1c30;
+  --foreground: #f3f6fa;
+  --card: #1a2942;
+  --card-foreground: #f3f6fa;
+  --popover: #1a2942;
+  --popover-foreground: #f3f6fa;
+  --primary: #245ba8;
+  --primary-foreground: #ffffff;
+  --secondary: #132741;
+  --secondary-foreground: #ffffff;
+  --muted: #1a2942;
+  --muted-foreground: #9aa6b6;
+  --accent: #21334f;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.14);
+  --ring: #245ba8;
+}
+
+@theme inline {
+  /* Fonts */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand utilities → bg-brand, text-brand, bg-navy, bg-surface-raised, etc. */
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-blue: var(--blue);
+  --color-blue-strong: var(--blue-strong);
+  --color-blue-foreground: var(--blue-foreground);
+  --color-navy-deep: var(--navy-deep);
+  --color-navy: var(--navy);
+  --color-navy-raised: var(--navy-raised);
+  --color-charcoal: var(--charcoal);
+  --color-ink: var(--ink);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-overlay: var(--surface-overlay);
+  --color-body-gray: var(--body-gray);
+  --color-muted-gray: var(--muted-gray);
+
+  /* shadcn token bridges */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  /* Animations */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-slow-zoom: slow-zoom 20s ease-in-out infinite alternate;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  @keyframes slow-zoom {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.12);
+    }
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Base                                                                       */
+/* -------------------------------------------------------------------------- */
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--surface);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--brand);
+    color: var(--brand-foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Faint medical "plus" grid used behind the hero / navy sections. */
+@utility cross-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M28 20h4v8h8v4h-8v8h-4v-8h-8v-4h8z' fill='%23ffffff' fill-opacity='0.03'/%3E%3C/svg%3E");
+  background-size: 60px 60px;
+}
+
+/* Continuous horizontal marquee (About trust strip). Track holds two copies of
+   the content; translating by -50% loops seamlessly. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* Pause on hover (desktop only) — resumes from the exact position, no reset.
+   Gated to hover-capable devices so touch screens keep scrolling. */
+@media (hover: hover) {
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
+
+/* Hero ambient motion (home hero). Transform/opacity only → GPU-composited.
+   Float distance is a custom property so tablet/mobile can dial it down;
+   per-element duration/delay come from inline vars. */
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(calc(var(--float-distance, 12px) * -1));
+  }
+}
+
+.animate-float {
+  animation: hero-float var(--float-duration, 6s) ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+  will-change: transform;
+}
+
+/* Slow, low-opacity gradient glow drifting behind the hero image. */
+@keyframes hero-glow-drift {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 0.28;
+  }
+}
+
+.animate-hero-glow {
+  animation: hero-glow-drift 12s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Tablet: soften the float. */
+@media (max-width: 1024px) {
+  .animate-float {
+    --float-distance: 8px;
+  }
+}
+
+/* Mobile: soften further so nothing crowds. */
+@media (max-width: 640px) {
+  .animate-float {
+    --float-distance: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-hero-glow {
+    animation: none;
+  }
+}
+
+/* Image collage ambient floats (Why Choose NuLease). Each image drifts on its
+   own duration + negative delay so they never move in lockstep and there is no
+   start-up jump. Distance (--fd) softens on smaller screens. Transform only. */
+@keyframes collage-float-a {
+  0%,
+  100% {
+    transform: translateY(calc(var(--fd, 10px) * -1));
+  }
+  50% {
+    transform: translateY(var(--fd, 10px));
+  }
+}
+
+@keyframes collage-float-b {
+  /* opposite phase to float-a */
+  0%,
+  100% {
+    transform: translateY(var(--fd, 10px));
+  }
+  50% {
+    transform: translateY(calc(var(--fd, 10px) * -1));
+  }
+}
+
+@keyframes collage-float-diag {
+  0%,
+  100% {
+    transform: translate(calc(var(--fd, 10px) * -0.5), calc(var(--fd, 10px) * -1)) rotate(-1deg);
+  }
+  50% {
+    transform: translate(calc(var(--fd, 10px) * 0.5), var(--fd, 10px)) rotate(1deg);
+  }
+}
+
+.animate-collage-top {
+  animation: collage-float-a 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-collage-center {
+  animation: collage-float-diag 7s ease-in-out infinite;
+  animation-delay: -0.5s;
+  will-change: transform;
+}
+
+.animate-collage-bottom {
+  animation: collage-float-b 6.5s ease-in-out infinite;
+  animation-delay: -1s;
+  will-change: transform;
+}
+
+/* Subtle green glow pulsing behind the overlapping centre image. */
+@keyframes collage-glow-pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.12;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.12);
+    opacity: 0.22;
+  }
+}
+
+.animate-collage-glow {
+  animation: collage-glow-pulse 8s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Tablet: soften float ~30%. */
+@media (max-width: 1024px) {
+  .animate-collage-top,
+  .animate-collage-center,
+  .animate-collage-bottom {
+    --fd: 7px;
+  }
+}
+
+/* Mobile: soften further. */
+@media (max-width: 640px) {
+  .animate-collage-top,
+  .animate-collage-center,
+  .animate-collage-bottom {
+    --fd: 5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-collage-top,
+  .animate-collage-center,
+  .animate-collage-bottom,
+  .animate-collage-glow {
+    animation: none;
+  }
+}
