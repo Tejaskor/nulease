@@ -1,11 +1,16 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { useState } from "react";
 
 import { Container } from "@/components/shared";
-import ourDepartmentImg from "@/images/services/our-department.png";
+import counselingImg from "@/images/services/Individual & Group Counseling.png";
+import hivStiCareImg from "@/images/services/HIV & STI Care.png";
+import matImg from "@/images/services/our-department.png";
+import detoxImg from "@/images/services/Outpatient Detox Support.png";
+import recoverySupportImg from "@/images/services/Recovery Support Services.png";
+import relapsePreventionImg from "@/images/services/Relapse Prevention.png";
 import {
   easeOutExpo,
   fadeInUp,
@@ -36,6 +41,7 @@ interface Department {
   title: string;
   description: string;
   points: string[];
+  image: StaticImageData;
 }
 
 const departments: Department[] = [
@@ -49,6 +55,7 @@ const departments: Department[] = [
       "Treatment for opioid and alcohol dependence",
       "FDA-approved medications prescribed by experienced providers",
     ],
+    image: matImg,
   },
   {
     tab: "Individual & Group Counseling",
@@ -60,6 +67,7 @@ const departments: Department[] = [
       "Confidential individual and group sessions",
       "Flexible scheduling around your life",
     ],
+    image: counselingImg,
   },
   {
     tab: "Recovery Support Services",
@@ -71,6 +79,7 @@ const departments: Department[] = [
       "Case management and community referrals",
       "Long-term relapse-prevention planning",
     ],
+    image: recoverySupportImg,
   },
   {
     tab: "HIV & STI Care",
@@ -82,28 +91,31 @@ const departments: Department[] = [
       "Evidence-based treatment and monitoring",
       "Compassionate, discreet care",
     ],
+    image: hivStiCareImg,
   },
   {
-    tab: "Medical & Laboratory Services",
-    title: "Medical & Laboratory Services",
+    tab: "Relapse Prevention",
+    title: "Relapse Prevention",
     description:
-      "On-site medical and laboratory services that support safe, effective treatment — from routine screening to the diagnostics that guide your personalized care plan.",
+      "Recovery is an ongoing journey. Our relapse prevention program helps you identify triggers, develop healthy coping strategies, and build the confidence to stay on track through continuous support and personalized care.",
     points: [
-      "On-site testing and diagnostics",
-      "Coordinated with your treatment plan",
-      "Fast, reliable results",
+      "Individualized relapse-prevention planning",
+      "Trigger identification and healthy coping skills",
+      "Regular follow-ups to keep you on track",
     ],
+    image: relapsePreventionImg,
   },
   {
-    tab: "Legal & Recovery Assistance",
-    title: "Legal & Recovery Assistance",
+    tab: "Outpatient Detox Support",
+    title: "Outpatient Detox Support",
     description:
-      "Guidance through the legal and administrative side of recovery, helping you meet requirements and move forward with confidence and dignity.",
+      "Begin your recovery with medically supervised outpatient detox. Our team helps you manage withdrawal symptoms safely and comfortably while you continue living at home, with a clear path into ongoing treatment.",
     points: [
-      "Support meeting legal requirements",
-      "Documentation and compliance help",
-      "Advocacy focused on your recovery",
+      "Comprehensive evaluation to determine the safest detox approach",
+      "Medically supervised withdrawal management and monitoring",
+      "Seamless transition into ongoing treatment and recovery planning",
     ],
+    image: detoxImg,
   },
 ];
 
@@ -186,7 +198,7 @@ export function OurDepartment() {
                 className="group relative aspect-[490/240] w-full overflow-hidden rounded-xl"
               >
                 <Image
-                  src={ourDepartmentImg}
+                  src={current.image}
                   alt={current.title}
                   fill
                   sizes="(max-width: 1024px) 100vw, 60vw"
